@@ -5,10 +5,10 @@ import java.util.Scanner;
 public class Choice {
 
 	private static Scanner sc = new Scanner(System.in);
-	Vehicle veh;
+	Planes pla = new Planes();
 
 	public String getInput() {
-		System.out.println("Enter CRUD choice: ");
+		System.out.println("Enter CRUD choice! To see a list of choices, please type list: ");
 		return sc.nextLine();
 	}
 
@@ -28,18 +28,16 @@ public class Choice {
 				// switch case to match which CRUD operation to perform
 				switch (crud.toLowerCase()) {
 				case "create":
-					System.out.println("Enter model: ");
-					String mod = sc.nextLine();
-					veh.setModel(mod);
-					System.out.println("Enter mileage: ");
-					int miles = sc.nextInt();
+					System.out.println("Enter company: ");
+					String com = sc.nextLine();
+					pla.setCompany(com);
+					System.out.println("Enter stand: ");
+					int stand = sc.nextInt();
 					sc.nextLine();
-					System.out.println("Enter vehicle type: ");
-					String vType = sc.nextLine();
-					System.out.println("Enter doors: ");
-					int door = sc.nextInt();
-					sc.nextLine();
-					q.create(new Vehicle(mod, miles, vType, door));
+					System.out.println("Enter colour: ");
+					String colour = sc.nextLine();
+					
+					q.create(new Planes(com, stand, colour));
 					break;
 				case "read":
 					q.read();
@@ -48,9 +46,9 @@ public class Choice {
 					System.out.println("Enter id of record to update: ");
 					int uid = sc.nextInt();
 					sc.nextLine();//capture enter key
-					System.out.println("Enter the new model of the vehicle: ");
-					String nModel = sc.nextLine();
-					q.update(new Vehicle (uid, nModel,0, null, 0));					
+					System.out.println("Enter the new colour of the aircraft: ");
+					String nColour = sc.nextLine();
+					q.update(new Planes (uid, null,0, nColour));					
 					break;
 				case "delete":
 					System.out.println("Enter id of record to delete: ");
@@ -64,7 +62,15 @@ public class Choice {
 					sc.nextLine();//capture enter key
 					q.readByID(sid);
 					break;	
-					
+				case "searchbyname":
+					System.out.println("Enter company name of record to search: ");
+					String nameSearch = sc.nextLine();
+					sc.nextLine();//capture enter key
+					q.readByName(nameSearch);
+					break;	
+				case "list":
+					System.out.println("create, read, update, searchbyid, searchbyname");
+					break;	
 					
 				default:
 					System.out.println("Invalid CRUD choice");

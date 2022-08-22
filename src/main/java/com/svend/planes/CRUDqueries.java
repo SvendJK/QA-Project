@@ -38,7 +38,7 @@ public class CRUDqueries {
 	// DELETE
 
 	// CREATE - INSERT INTO .... -> returns nothing, just says "query ok"
-	public void create(Vehicle v) {
+	public void create(Planes p) {
 
 //	public void create(String model, int mileage, String vehicleType, int doors) {
 		// info to collect to pass into the database
@@ -49,28 +49,30 @@ public class CRUDqueries {
 
 		// INSERT INTO vehicle(model, mileage, vehicle_type, doors)
 		// VALUES("tbc",30000,"Car",4);
-		String createStmt = "INSERT INTO vehicle(model, mileage, vehicle_type, doors) VALUES('" + v.getModel() + "'," + v.getMileage()
-				+ ",'" + v.getVehicleType() + "'," + v.getDoors() + ");";
+		String createStmt = "INSERT INTO planes(company, stand, colour) VALUES('" + p.getCompany() + "'," + p.getStand()
+				+ ",'" + p.getColour() + "');";
 		try {
 			stmt.executeUpdate(createStmt);
 			System.out.println("Create statement executed");
 		} catch (SQLException e) {
 			System.out.println("Bad query");
+			System.out.println(createStmt);
 			e.printStackTrace();
 		}
 	}
 
 	// READ - SELECT ..... -> executeQuery
 	public void read() {
-		String readStmt = "SELECT * FROM vehicle;";
+		String readStmt = "SELECT * FROM planes;";
 		try {
 			rs = stmt.executeQuery(readStmt);
 			while (rs.next()) {
 				System.out.println("ID: " + rs.getInt("id"));
-				System.out.println("Model: " + rs.getString("model"));
-				System.out.println("Mileage: " + rs.getInt("mileage"));
-				System.out.println("Vehicle type: " + rs.getString("vehicle_type"));
-				System.out.println("Doors: " + rs.getInt("doors"));
+				System.out.println("Company: " + rs.getString("company"));
+				System.out.println("Stand: " + rs.getInt("stand"));
+				System.out.println("Colour " + rs.getString("colour"));
+				System.out.println("-----------------------------------");
+				
 			}
 
 		} catch (SQLException e) {
@@ -80,9 +82,9 @@ public class CRUDqueries {
 	}
 
 	// UPDATE - UPDATE ..... -> executeUpdate
-	public void update(Vehicle v) {
+	public void update(Planes p) {
 //		UPDATE vehicle SET model = "chevy" WHERE id = 2;
-		String updateStmt = "UPDATE vehicle SET model = '" + v.getModel() + "' WHERE id = " + v.getId() + ";";
+		String updateStmt = "UPDATE planes SET colour = '" + p.getColour() + "' WHERE id = " + p.getId() + ";";
 		try {
 			stmt.executeUpdate(updateStmt);
 			System.out.println("Update statement executed");
@@ -96,7 +98,7 @@ public class CRUDqueries {
 
 	// DELETE - DELETE ..... -> executeUpdate
 	public void delete(int id) {
-		String delStmt = "DELETE FROM vehicle WHERE id=" + id + ";";
+		String delStmt = "DELETE FROM planes WHERE id=" + id + ";";
 		try {
 			stmt.executeUpdate(delStmt);
 			System.out.println("Delete statement executed");
@@ -120,20 +122,42 @@ public class CRUDqueries {
 	
 	
 	public void readByID(int id) {
-		String read = "SELECT * FROM vehicle WHERE ID =" +id;
+		String read = "SELECT * FROM planes WHERE ID =" +id;
 		try {
 			rs = stmt.executeQuery(read);
 			while (rs.next()) {
 				System.out.println("ID: " + rs.getInt("id"));
-				System.out.println("Model: " + rs.getString("model"));
-				System.out.println("Mileage: " + rs.getInt("mileage"));
-				System.out.println("Vehicle type: " + rs.getString("vehicle_type"));
-				System.out.println("Doors: " + rs.getInt("doors"));
+				System.out.println("Company: " + rs.getString("company"));
+				System.out.println("Stand: " + rs.getInt("stand"));
+				System.out.println("Colour " + rs.getString("colour"));
+				System.out.println("-----------------------------------");
+
 			}
 		} catch (SQLException e) {
 			System.out.println("Bad query");
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public void readByName(String company) {
+		String read = "SELECT * FROM planes WHERE company = '" +company + "'" ;
+		try {
+			rs = stmt.executeQuery(read);
+			while (rs.next()) {
+				System.out.println("ID: " + rs.getInt("id"));
+				System.out.println("Company: " + rs.getString("company"));
+				System.out.println("Stand: " + rs.getInt("stand"));
+				System.out.println("Colour " + rs.getString("colour"));
+				System.out.println("-----------------------------------");
+
+			}
+		} catch (SQLException e) {
+			System.out.println("Bad query");
+			e.printStackTrace();
+		}
+	}
+	
+	
 
 }
